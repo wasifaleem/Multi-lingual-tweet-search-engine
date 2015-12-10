@@ -1,0 +1,109 @@
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+.classpath
+.project
+.settings
+.target
+.idea
+.idea_modules
+bin
+RUNNING_PID
+# Directories #
+/build/
+/bin/
+target/
+# OS Files #
+.DS_Store
+*.class
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+######################
+# OSX
+######################
+.DS_Store
+.svn
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+# general
+*~
+*.log
+tmp
+dump
+.history
+/*.iml
+/out
+
+# Eclipse
+.settings
+.cache
+.project
+.classpath
+.scala_dependencies
+bin
+
+# IDEA
+/.idea
+/.idea_modules
+
+dist
+project/project
+project/boot
+project/target
+project/plugins/target
+target
+.target
+
+logs
+RUNNING_PID
+*.log
+tmp
+dump
+.history
+/*.iml
+/out
+.scala_dependencies
+project/boot
+project/plugins/target
+RUNNING_PID
+# general
+*~
+
+# Eclipse
+.settings
+.cache
+.project
+.classpath
+bin
+
+# IDEA
+/.idea
+/.idea_modules
+/dependency-reduced-pom.xml
+
+# Gradle
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar

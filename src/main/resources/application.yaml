@@ -1,0 +1,29 @@
+spring:
+  main:
+    banner_mode: off
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  mvc:
+    favicon:
+      enabled: false
+  thymeleaf:
+    check-template-location: true
+    cache: false
+  jmx:
+    enabled: false
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+logging:
+  file: search.log
+#  level:
+#    org.springframework.boot: DEBUG
+
+
+---
+spring:
+  profiles: development
