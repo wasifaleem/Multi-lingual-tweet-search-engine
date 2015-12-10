@@ -44,13 +44,12 @@ var Search = React.createClass({
             <div>
                 <div>
                     <div className="navbar bg-faded">
-                        <a className="navbar-brand" href="#">Search</a>
-                        <form className="form-inline">
+                        <form className="form-inline ">
                             <div className="form-group">
                                 <div className="input-group">
                                     <input autoFocus className="form-control" type="text"
                                            value={this.state.query} onChange={this.handleQuery}
-                                           placeholder="Type your query" size="60"/>
+                                           placeholder="Type your query"/>
                                     <div className="input-group-addon">
                                         <i className="fa fa-search"/>
                                     </div>
@@ -61,16 +60,16 @@ var Search = React.createClass({
                 </div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-8 col-md-offset-2">
+                        <div className="col-md-6 col-md-offset-3">
                             <Search.ResultList results={this.state.results}/>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-2 col-md-offset-10">
+                        <div className="col-md-3">
                         </div>
                     </div>
                 </div>
@@ -87,11 +86,14 @@ Search.ResultList = React.createClass({
             var tweets = results.response.docs;
             var resultNodes = tweets.map(function (tweet) {
                 return (
-                    <Search.Tweet key={tweet.id} tweet={tweet} query={query} results={results}/>
+                    <div>
+                        <Search.Tweet key={tweet.id} tweet={tweet} query={query} results={results}/>
+                        <hr key={'hr' +tweet.id}/>
+                    </div>
                 );
             });
             return (
-                <div className="col-md-10">
+                <div className="tweet-block">
                     {resultNodes}
                 </div>
             );
@@ -107,19 +109,23 @@ Search.Tweet = React.createClass({
         var query = this.props.query;
         var tweet = this.props.tweet;
         var highlights = this.props.results.highlighting;
-        var profileImage = tweet["user.profile_image"].replace("normal", "mini");
         var tweetText = tweet.text;
         if (highlights[tweet.id] && highlights[tweet.id].text) {
             tweetText = highlights[tweet.id].text[0];
         }
         return (
-            <div className="media">
-                <a className="media-left" href="#">
-                    <img className="media-object" src={profileImage}/>
-                </a>
-                <div className="media-body" data-linkify="this">
-                    <h6 className="media-heading">{tweet["user.name"]}</h6>
-                    <p ref={function(t) {if (t!=null){linkifyElement(t)}}}
+            <div className="row tweet">
+                <div className="col-md-1">
+                    <img className="tweet-profile-image" src={tweet["user.profile_image"]} onError={function(e) {
+                        e.target.src = 'https://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png';
+                    }}/>
+                </div>
+                <div className="col-md-11 ">
+                    <h6 className="tweet-title">
+                        <strong>{tweet["user.name"]}</strong>
+                        <small className="text-muted"> @{tweet["user.screen.name"]}</small>
+                    </h6>
+                    <p className="tweet-text" ref={function(t) {if (t!=null){linkifyElement(t)}}}
                        dangerouslySetInnerHTML={{__html: tweetText}}/>
                 </div>
             </div>
