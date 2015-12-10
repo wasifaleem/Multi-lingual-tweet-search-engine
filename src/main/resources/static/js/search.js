@@ -21,11 +21,11 @@ var Search = React.createClass({
             }
             this.setState({
                 jqXHR: $.ajax({
-                    url: 'http://localhost:8983/solr/tweets/query',
+                    url: 'http://localhost:8983/solr/tweets/query?hl=true&hl.fragsize=0&hl.simple.pre=<b>&hl.simple.post=</b>',
                     type: 'POST',
                     //dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    data: '{query: "' + newQuery + '"}',
+                    data: JSON.stringify({query: newQuery}),
                     success: function (response) {
                         console.log(response);
                         this.setState({results: response});
@@ -48,7 +48,7 @@ var Search = React.createClass({
                         <form className="form-inline">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input className="form-control" type="text"
+                                    <input autoFocus className="form-control" type="text"
                                            value={this.state.query} onChange={this.handleQuery}
                                            placeholder="Type your query" size="60"/>
                                     <div className="input-group-addon">
@@ -61,8 +61,16 @@ var Search = React.createClass({
                 </div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-10">
+                        <div className="col-md-2">
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-8 col-md-offset-2">
                             <Search.ResultList results={this.state.results}/>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-2 col-md-offset-10">
                         </div>
                     </div>
                 </div>
@@ -73,20 +81,15 @@ var Search = React.createClass({
 
 Search.ResultList = React.createClass({
     render: function () {
-        var resultNodes;
         var query = this.props.query;
         var results = this.props.results;
-        if (results.hasOwnProperty('response')) {
+        if (results.hasOwnProperty('response') && results.response.docs && results.response.docs.length > 0) {
             var tweets = results.response.docs;
-            if (tweets.length <= 0) {
-                resultNodes = (<div><p>No results!</p></div>)
-            } else {
-                resultNodes = tweets.map(function (tweet) {
-                    return (
-                        <Search.Tweet key={tweet.id} tweet={tweet} query={query}/>
-                    );
-                });
-            }
+            var resultNodes = tweets.map(function (tweet) {
+                return (
+                    <Search.Tweet key={tweet.id} tweet={tweet} query={query} results={results}/>
+                );
+            });
             return (
                 <div className="col-md-10">
                     {resultNodes}
@@ -103,16 +106,21 @@ Search.Tweet = React.createClass({
     render: function () {
         var query = this.props.query;
         var tweet = this.props.tweet;
-        var profileImage = tweet["user.profile_image"].replace("normal", "bigger");
-        console.log(tweet["user.profile_image"]);
+        var highlights = this.props.results.highlighting;
+        var profileImage = tweet["user.profile_image"].replace("normal", "mini");
+        var tweetText = tweet.text;
+        if (highlights[tweet.id] && highlights[tweet.id].text) {
+            tweetText = highlights[tweet.id].text[0];
+        }
         return (
             <div className="media">
                 <a className="media-left" href="#">
                     <img className="media-object" src={profileImage}/>
                 </a>
-                <div className="media-body">
-                    <h4 className="media-heading">{tweet["user.name"]}</h4>
-                    {tweet.text}
+                <div className="media-body" data-linkify="this">
+                    <h6 className="media-heading">{tweet["user.name"]}</h6>
+                    <p ref={function(t) {if (t!=null){linkifyElement(t)}}}
+                       dangerouslySetInnerHTML={{__html: tweetText}}/>
                 </div>
             </div>
         );
