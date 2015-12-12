@@ -119,3 +119,7 @@ body {
     background-color: #0275d8;
     color: #FFF;
 }
+
+.nav-pills .nav-link {
+    padding: .3em 1em;
+}

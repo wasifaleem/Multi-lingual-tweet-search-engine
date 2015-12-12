@@ -8,8 +8,7 @@ var Search = React.createClass({
         } else {
             var oldQuery = this.state.query;
             var newQuery = event.target.value;
-            this.setState({query: newQuery}, function () {
-                this.setState({currentCursor: 1, cursors: {1: "*"}});
+            this.setState({query: newQuery, filter: [], currentCursor: 1, cursors: {1: "*"}}, function () {
                 this.fetchResults(oldQuery);
             });
         }
@@ -68,10 +67,15 @@ var Search = React.createClass({
         this.setState({response: response});
     },
     addFilter: function (filterValue) {
-        if (jQuery.inArray(filterValue, this.state.filter) !== -1) {
-            this.state.filter.pop(filterValue);
+        var inArray = jQuery.inArray(filterValue, this.state.filter);
+        if (inArray !== -1) {
+            this.state.filter.splice(inArray, 1);
+            console.log('pop');
+            console.log(this.state.filter);
         } else {
             this.state.filter.push(filterValue);
+            console.log('push');
+            console.log(this.state.filter);
         }
         this.fetchResults();
     },
