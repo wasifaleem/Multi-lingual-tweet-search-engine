@@ -1,12 +1,13 @@
-# CSE 535 Information Retrieval Final project #
+# Multi-lingual tweet search engine #
 
-This project is a [located at](http://ec2-54-213-82-135.us-west-2.compute.amazonaws.com/)
+[Visit project](http://ec2-54-213-82-135.us-west-2.compute.amazonaws.com/)
 ### Features ###
 
-* Search as you type
-* Filtering by lang, hashtag, entities(using Solr faceting).
-* Content tagging of tweets using Stanford NER
-* Graphs
+* Instant Search(search as you type).
+* Indexed tweet’s from English, French, German, Spanish and Russian languages with totalcount over 32,000.
+* Content tagging using [Stanford NER](http://nlp.stanford.edu/software/CRF-NER.shtml).
+* Faceting and filtering by lang, hashtag, entities.
+* Visualizations
 
 ### Frontend ###
 
