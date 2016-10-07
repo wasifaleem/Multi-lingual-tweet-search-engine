@@ -7,7 +7,8 @@
 * Indexed tweet’s from English, French, German, Spanish and Russian languages with totalcount over 32,000.
 * Content tagging using [Stanford NER](http://nlp.stanford.edu/software/CRF-NER.shtml).
 * Faceting and filtering by lang, hashtag, entities.
-* Visualizations
+* Find relevant hashtags.
+* Visualizations for hashtag distribuition and timelines.
 
 ### Frontend ###
 
